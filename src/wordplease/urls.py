@@ -18,6 +18,7 @@ from django.contrib import admin
 from rest_framework.compat import include
 from rest_framework.routers import DefaultRouter
 
+from blogs.api_rest.api import BlogsAPI
 from blogs.views import posts_list, blogs_list, user_posts_list, user_post_detail, NewPostView
 from login.api_rest.api import UserViewSet
 from login.views import LoginView, logout, SignupView
@@ -38,6 +39,9 @@ urlpatterns = [
     url(r'^logout$', logout, name='logout'),
     url(r'^signup$', SignupView.as_view(), name='signup'),
 
-    # api
-    url(r'^api/1.0/', include(router.urls))
+    # api de usuarios
+    url(r'^api/1.0/', include(router.urls)),
+    # api de blogs
+    url(r'^api/1.0/blogs/$', BlogsAPI.as_view(), name='blogs_api')
+
 ]
