@@ -25,6 +25,7 @@ from login.views import LoginView, logout, SignupView
 
 router = DefaultRouter()
 router.register("users", UserViewSet, base_name="users_api")
+router.register("posts", PostViewSet, base_name="posts_api")
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -45,6 +46,10 @@ urlpatterns = [
     url(r'^api/1.0/blogs/$', BlogsAPI.as_view(), name='blogs_api'),
     # api de posts
     url(r'^api/1.0/blogs/(?P<username>[0-9a-zA-Z]+)/$', PostViewSet.as_view({'get': 'list'}), name='user_posts_list_api'),
-    url(r'^api/1.0/blog/$', PostViewSet.as_view({'post': 'create'}), name='user_posts_list_api')
+    #url(r'^api/1.0/posts/$', PostViewSet.as_view({'post': 'create'}), name='user_posts_list_api'),
+    #url(r'^api/1.0/posts/(?P<post_pk>[0-9]+)$', PostViewSet.as_view({'get': 'list', 'delete': 'destroy'}), name='user_posts_list_api')
+
+
+
 
 ]

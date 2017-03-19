@@ -23,7 +23,13 @@ class PostViewSet(ModelViewSet):
     ordering_fields = ("title", "publish_at")
 
     def get_serializer_class(self):
-        return PostsListSerializer if self.action == "list" else PostSerializer
+        if self.action == "list":
+            if "post_pk" in self.kwargs:
+                return PostSerializer
+            else:
+                return PostsListSerializer
+        else:
+            return PostSerializer
 
     def get_queryset(self):
         if "username" in self.kwargs:
@@ -33,6 +39,16 @@ class PostViewSet(ModelViewSet):
             else:
                 queryset = Post.objects.select_related().filter(owner=user).exclude(publish_at__isnull=True).order_by('-publish_at')
             return queryset
+        elif "pk" in self.kwargs:
+            #post = Post.objects.select_related().get(pk=self.kwargs.get("pk"))
+            queryset = Post.objects.select_related().filter(pk=self.kwargs.get("pk"))
+            return queryset
+            #if self.request.user.is_superuser or self.request.user == post.owner:
+                #queryset = Post.objects.select_related().filter(pk=self.kwargs.get("pk"))
+            #else:
+                #queryset = Post.objects.select_related().filter(pk=self.kwargs.get("pk")).exclude(publish_at__isnull=True)
+        else:
+            return None
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
