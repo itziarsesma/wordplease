@@ -10,11 +10,12 @@ from blogs.models import Post
 
 def posts_list(request):
     """
-    Lista los post por fecha de publicación de forma descendente
+    Lista los post publicados por fecha de publicación de forma descendente
     :param request: HttpRequest
     :return: HttResponse
     """
-    posts = Post.objects.select_related().all().order_by('-publish_at')
+    #posts = Post.objects.select_related().all().order_by('-publish_at')
+    posts = Post.objects.select_related().exclude(publish_at__isnull=True).order_by('-publish_at')
 
     context = {
         'post_objects': posts
@@ -35,13 +36,13 @@ def blogs_list(request):
 
 def user_posts_list(request, username):
     """
-    Lista los post del blog de un usuario de forma desacendente
+    Lista TODOS los post del blog de un usuario de forma descendente
     :param request: HttpRequest
     :param username: Nombre de usuario
     :return: HttpResponse
     """
     user = User.objects.filter(username=username)
-    posts = Post.objects.select_related('owner').filter(owner=user).order_by('-publish_at')
+    posts = Post.objects.select_related('owner').filter(owner=user).order_by('-created_at')
 
     context = {
         'post_objects': posts

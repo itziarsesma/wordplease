@@ -42,7 +42,6 @@ urlpatterns = [
     # api de usuarios
     url(r'^api/1.0/', include(router.urls)),
     # api de blogs
-    url(r'^api/1.0/blogs/$', BlogsAPI.as_view(), name='blogs_api'),
-    url(r'^api/1.0/blogs/?$', BlogsAPI.as_view(), name="blogs_api")
+    url(r'^api/1.0/blogs/$', BlogsAPI.as_view(), name='blogs_api')
 
 ]
