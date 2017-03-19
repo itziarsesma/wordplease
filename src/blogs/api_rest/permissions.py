@@ -4,6 +4,9 @@ class PostsPermission:
         if view.action == "list":
             return True
 
+        if view.action == "create":
+            return request.user.is_authenticated
+
         return False
 
     def has_object_permission(self, request, view, obj):

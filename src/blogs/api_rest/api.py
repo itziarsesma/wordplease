@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.viewsets import ModelViewSet
 
 from blogs.api_rest.permissions import PostsPermission
-from blogs.api_rest.serializers import BlogSerializer, PostsListSerializer
+from blogs.api_rest.serializers import BlogSerializer, PostsListSerializer, PostSerializer
 from blogs.models import Post
 
 
@@ -15,6 +15,7 @@ class BlogsAPI(ListAPIView):
     search_fields = ("username", )
     ordering_fields = ("username", )
 
+
 class PostViewSet(ModelViewSet):
     permission_classes = (PostsPermission,)
     filter_backends = (SearchFilter, OrderingFilter)
@@ -22,7 +23,7 @@ class PostViewSet(ModelViewSet):
     ordering_fields = ("title", "publish_at")
 
     def get_serializer_class(self):
-        return PostsListSerializer
+        return PostsListSerializer if self.action == "list" else PostSerializer
 
     def get_queryset(self):
         if "username" in self.kwargs:
@@ -32,3 +33,6 @@ class PostViewSet(ModelViewSet):
             else:
                 queryset = Post.objects.select_related().filter(owner=user).exclude(publish_at__isnull=True).order_by('-publish_at')
             return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)

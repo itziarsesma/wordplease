@@ -44,5 +44,7 @@ urlpatterns = [
     # api de blogs
     url(r'^api/1.0/blogs/$', BlogsAPI.as_view(), name='blogs_api'),
     # api de posts
-    url(r'^api/1.0/blogs/(?P<username>[0-9a-zA-Z]+)/$', PostViewSet.as_view({'get': 'list'}), name='user_posts_list_api')
+    url(r'^api/1.0/blogs/(?P<username>[0-9a-zA-Z]+)/$', PostViewSet.as_view({'get': 'list'}), name='user_posts_list_api'),
+    url(r'^api/1.0/blog/$', PostViewSet.as_view({'post': 'create'}), name='user_posts_list_api')
+
 ]
