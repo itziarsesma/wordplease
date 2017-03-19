@@ -40,16 +40,10 @@ urlpatterns = [
     url(r'^logout$', logout, name='logout'),
     url(r'^signup$', SignupView.as_view(), name='signup'),
 
-    # api de usuarios
+    # api de usuarios y posts
     url(r'^api/1.0/', include(router.urls)),
     # api de blogs
     url(r'^api/1.0/blogs/$', BlogsAPI.as_view(), name='blogs_api'),
     # api de posts
-    url(r'^api/1.0/blogs/(?P<username>[0-9a-zA-Z]+)/$', PostViewSet.as_view({'get': 'list'}), name='user_posts_list_api'),
-    #url(r'^api/1.0/posts/$', PostViewSet.as_view({'post': 'create'}), name='user_posts_list_api'),
-    #url(r'^api/1.0/posts/(?P<post_pk>[0-9]+)$', PostViewSet.as_view({'get': 'list', 'delete': 'destroy'}), name='user_posts_list_api')
-
-
-
-
+    url(r'^api/1.0/blogs/(?P<username>[0-9a-zA-Z]+)/$', PostViewSet.as_view({'get': 'list'}), name='user_posts_list_api')
 ]

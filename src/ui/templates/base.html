@@ -28,11 +28,10 @@
             <li>
                 <a href="{% url 'login' %}">Login</a>
             </li>
-            {% endif %}
-
             <li>
                 <a href="{% url 'signup' %}">Registro</a>
             </li>
+            {% endif %}
         </ul>
     </nav>
     {% block content %} {% endblock %}

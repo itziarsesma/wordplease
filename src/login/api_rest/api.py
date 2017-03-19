@@ -12,8 +12,3 @@ class UserViewSet(ModelViewSet):
     def get_serializer_class(self):
         return UsersListSerializer if self.action == "list" else UserSerializer
 
-    def perform_create(self, serializer):
-        serializer.save()
-
-    def perform_update(self, serializer):
-        serializer.save()

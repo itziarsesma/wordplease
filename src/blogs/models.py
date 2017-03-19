@@ -14,7 +14,6 @@ class Post(models.Model):
     intro = models.CharField(max_length=500)
     body = models.TextField()
     media_url = models.URLField(blank=True, null=True)
-    #publish_at = models.DateTimeField(auto_now_add=True)
     publish_at = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
